@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Spotify App{% endblock %}</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      padding-top: 40px;
+    }
+
+    h1, h2 {
+      color: #1DB954;
+    }
+
+    label, input, button, select, a {
+      color: #fff !important;
+    }
+
+    input.form-control {
+      background-color: #222;
+      border-color: #444;
+      color: #fff;
+    }
+    input.form-control::placeholder {
+      color: #aaa;
+    }
+
+    input.form-control:focus {
+      background-color: #222 !important;
+      color: #fff !important;
+      border-color: #1DB954 !important;
+      box-shadow: none !important;
+    }
+
+    .btn-spotify {
+      background-color: #1DB954;
+      border-color: #1DB954;
+      color: #fff;
+    }
+    .btn-spotify:hover {
+      background-color: #1ed760;
+      border-color: #1ed760;
+      color: #fff;
+    }
+
+    .btn-outline-spotify {
+      color: #1DB954;
+      border-color: #1DB954;
+    }
+    .btn-outline-spotify:hover {
+      background-color: #1DB954;
+      color: #000;
+    }
+
+    .table-responsive table,
+    .track-table {
+      background-color: #111;
+      border-color: #444;
+    }
+    .track-table th,
+    .table-responsive th {
+      background-color: #222;
+      color: #1DB954;
+      border-color: #444;
+    }
+    .track-table td,
+    .table-responsive td {
+      background-color: #111;
+      color: #fff;
+      border-color: #444;
+    }
+    .table-responsive tr:nth-child(odd) td,
+    .track-table tr:nth-child(odd) td {
+      background-color: #1a1a1a;
+    }
+    .table-responsive tr:nth-child(even) td,
+    .track-table tr:nth-child(even) td {
+      background-color: #111;
+    }
+
+    iframe {
+      border-radius: 12px;
+      width: 200px;
+      height: 80px;
+    }
+
+    .queue-form button {
+      background-color: transparent;
+      border: none;
+      color: #1DB954;
+    }
+    .queue-form button:hover {
+      color: #1ed760;
+    }
+
+    .container {
+      max-width: 900px;
+    }
+
+    {% block extra_css %}{% endblock %}
+  </style>
+</head>
+
+<body>
+  <div class="container mt-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <script>
+    document.querySelectorAll(".queue-form").forEach(form => {
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const response = await fetch("/queue", {
+          method: "POST",
+          body: formData
+        });
+        if (response.ok) {
+          alert("✅ Added to queue!");
+        } else {
+          alert("❌ Error: could not add to queue.");
+        }
+      });
+    });
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
