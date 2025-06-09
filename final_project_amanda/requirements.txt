@@ -1,0 +1,6 @@
+Flask
+spotipy
+pandas
+sklearn
+os
+collections

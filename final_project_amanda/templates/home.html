@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Your Top Spotify Tracks{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">🎵 Your Top Spotify Tracks</h1>
+
+  <form class="row mb-4" method="GET" action="/home">
+    <div class="col-md-4">
+      <label for="min_popularity" class="form-label">Filter by Popularity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="min_popularity"
+        name="min_popularity"
+        value="{{ min_popularity }}"
+        placeholder="e.g. 50"
+      >
+    </div>
+    <div class="col-md-2 align-self-end">
+      <button type="submit" class="btn btn-spotify">Apply Filter</button>
+    </div>
+  </form>
+
+  <div class="mb-4">
+    <a href="/genre-recommendations" class="btn btn-outline-spotify">
+      Genre Recommender
+    </a>
+    <a href="/song-recommendations" class="btn btn-outline-spotify ms-2">
+      Song Recommender
+    </a>
+  </div>
+
+  <table class="table table-bordered table-striped track-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Artist</th>
+        <th>Popularity</th>
+        <th>Genres</th>
+        <th>Preview</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table_rows %}
+        {% set uri = track_uris[loop.index0] %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>
+            <iframe
+              src="https://open.spotify.com/embed/track/{{ uri }}"
+              allow="encrypted-media"
+              allowtransparency="true"
+              frameborder="0">
+            </iframe>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

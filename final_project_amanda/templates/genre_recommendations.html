@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Genre-Based Recommendations{% endblock %}
+
+{% block content %}
+  <a href="{{ url_for('home') }}" class="btn btn-outline-spotify mb-3">← Back to Home</a>
+
+  <h1>🎶 Genre-Based Song Recommendations</h1>
+  <p>
+    Based on your top genres:
+    <span style="color: #1DB954">{{ top_genres | join(', ') }}</span>
+  </p>
+
+  <div class="table-responsive">
+    <table class="table track-table table-bordered">
+      <thead>
+        <tr>
+          <th>Track</th>
+          <th>Artist</th>
+          <th>Genre</th>
+          <th>Popularity</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in tracks %}
+          <tr>
+            <td>{{ t.name }}</td>
+            <td>{{ t.artist }}</td>
+            <td>{{ t.genre }}</td>
+            <td>{{ t.popularity }}</td>
+            <td class="d-flex align-items-center">
+              <iframe
+                src="https://open.spotify.com/embed/track/{{ t.uri.split(':')[-1] }}"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media">
+              </iframe>
+              <form class="queue-form ms-2" action="/queue" method="post">
+                <input type="hidden" name="track_uri" value="{{ t.uri }}">
+                <button type="submit">+</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

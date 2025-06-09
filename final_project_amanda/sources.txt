@@ -1,0 +1,17 @@
+sources.txt
+
+Sources and Resources used:
+
+Used for initial setup and inspiration for building the Spotify recommendation system: https://medium.com/@obielinda/building-a-spotify-recommendation-system-d4b67018eac2
+
+Documentation for Spotify API features and functions: https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+
+Documentation for spotipy setup and functions: https://spotipy.readthedocs.io/en/2.25.1/#installation
+
+Inspiration for utilization of large song and artist dataset:
+https://www.kaggle.com/code/harshamadala/spotify-music-recommender/notebook 
+
+Some code was suggested by ChatGPT-4o (25 May 2025) for how to incorporate scikit-learn, specifically incorporating cosine similarity, and using the "nearest_neighbors" function.  
+
+Link to access large dataset used in project:
+https://github.com/gabminamedez/spotify-data/blob/master/data.csv

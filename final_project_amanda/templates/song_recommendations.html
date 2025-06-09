@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Song-Based Recommendations{% endblock %}
+
+{% block content %}
+  <a href="{{ url_for('home') }}" class="btn btn-outline-spotify mb-3">← Back to Home</a>
+
+  <h1>🎶 Song-Based Recommendations</h1>
+
+  <form method="post" class="mb-4">
+    <label for="song_name">Enter a Song Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      name="song_name"
+      id="song_name"
+      required
+      placeholder="e.g. Shape of You"
+    >
+    <button type="submit" class="btn btn-spotify mt-2">Recommend</button>
+  </form>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  {% if tracks %}
+    <h2>Recommendations:</h2>
+
+    <div class="table-responsive">
+      <table class="table track-table table-bordered">
+        <thead>
+          <tr>
+            <th>Track</th>
+            <th>Artist</th>
+            <th>Genre</th>
+            <th>Popularity</th>
+            <th>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in tracks %}
+            <tr>
+              <td>{{ t.name }}</td>
+              <td>{{ t.artist }}</td>
+              <td>{{ t.genre }}</td>
+              <td>{{ t.popularity }}</td>
+              <td class="d-flex align-items-center">
+                <iframe
+                  src="https://open.spotify.com/embed/track/{{ t.uri.split(':')[-1] }}"
+                  allowtransparency="true"
+                  allow="encrypted-media">
+                </iframe>
+                <form class="queue-form ms-2" action="/queue" method="post">
+                  <input type="hidden" name="track_uri" value="{{ t.uri }}">
+                  <button type="submit" title="Add to queue">+</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endblock %}
